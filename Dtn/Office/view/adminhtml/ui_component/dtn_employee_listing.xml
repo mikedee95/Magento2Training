@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">dtn_employee_listing.dtn_listing_data_source_employee</item>
+            <item name="deps" xsi:type="string">dtn_employee_listing.dtn_listing_data_source_employee</item>
+        </item>
+        <item name="spinner" xsi:type="string">office_employee_columns</item>
+        <item name="buttons" xsi:type="array">
+            <item name="add" xsi:type="array">
+                <item name="name" xsi:type="string">add</item>
+                <item name="label" xsi:type="string" translate="true">Add New Employee</item>
+                <item name="class" xsi:type="string">primary</item>
+                <item name="url" xsi:type="string">*/*/new</item>
+            </item>
+        </item>
+    </argument>
+
+    <argument name="context" xsi:type="configurableObject">
+        <argument name="class" xsi:type="string">Magento\Framework\View\Element\UiComponent\Context</argument>
+        <argument name="namespace" xsi:type="string">dtn_employee_listing</argument>
+    </argument>
+
+    <!--Cấu hình cho Ui-->
+    <dataSource name="dtn_listing_data_source_employee">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">
+                Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
+                <!--Thay bằng Ui...DataProvider-->
+            </argument>
+            <argument name="name" xsi:type="string">dtn_listing_data_source_employee</argument>
+            <argument name="primaryFieldName" xsi:type="string">entity_id</argument>
+            <argument name="requestFieldName" xsi:type="string">entity_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+
+    <!--Các công cụ trong admin-->
+    <listingToolbar name="listing_top">
+        <!--Default View-->
+        <bookmark name="bookmarks"/>
+        <!--Column-->
+        <columnsControls name="columns_controls"/>
+        <!--Export-->
+        <exportButton name="export_button"/>
+        <!--Search-->
+        <filterSearch name="fulltext"/>
+        <!--Filter-->
+        <filters name="listing_filters"/>
+        <!--Action-->
+        <massaction name="listing_massaction">
+            <action name="massdelete">
+                <settings>
+                    <url path=""/>
+                    <type>Delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+        </massaction>
+        <!--Phân trang-->
+        <paging name="listing_paging"/>
+    </listingToolbar>
+
+    <columns name="office_employee_columns">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="storageConfig" xsi:type="array">
+                    <item name="provider" xsi:type="string">dtn_employee_listing.dtn_employee_listing.listing_top.bookmarks</item>
+                    <item name="namespace" xsi:type="string">current</item>
+                </item>
+                <item name="editorConfig" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">dtn_employee_listing.dtn_employee_listing.dtn_employee_listing_columns.ids</item>
+                    <item name="enabled" xsi:type="boolean">true</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                    <item name="clientConfig" xsi:type="array">
+                        <item name="validateBeforeSave" xsi:type="boolean">false</item>
+                    </item>
+                </item>
+                <item name="childDefaults" xsi:type="array">
+                    <item name="fieldAction" xsi:type="array">
+                        <item name="provider" xsi:type="string">dtn_employee_listing.dtn_employee_listing.dtn_employee_listing_columns_editor</item>
+                        <item name="target" xsi:type="string">startEdit</item>
+                        <item name="params" xsi:type="array">
+                            <item name="0" xsi:type="string">${ $.$data.rowIndex }</item>
+                            <item name="1" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="provider" xsi:type="string">dtn_employee_listing.dtn_employee_listing.listing_top.bookmarks</item>
+                        <item name="root" xsi:type="string">columns.${ $.index }</item>
+                        <item name="namespace" xsi:type="string">current.${ $.storageConfig.root}</item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+        <!--Select Column-->
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <!--ID Column-->
+        <column name="entity_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                    <item name="sortOrder" xsi:type="number">1</item>
+                    <item name="draggable" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+        <!--Name Column-->
+        <column name="firstname">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">First Name</item>
+                    <item name="sortOrder" xsi:type="number">2</item>
+                    <item name="draggable" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+        <column name="lastname">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">Last Name</item>
+                    <item name="sortOrder" xsi:type="number">3</item>
+                    <item name="draggable" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="email">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Email</item>
+                    <item name="sortOrder" xsi:type="number">4</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="draggable" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="department_id" class="Dtn\Office\Ui\Component\Listing\Column\DepartmentName">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sorting" xsi:type="string">asc</item>
+                    <item name="label" xsi:type="string" translate="true">Department</item>
+                    <item name="sortOrder" xsi:type="number">5</item>
+                    <item name="draggable" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+        <column name="dob">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="timezone" xsi:type="boolean">false</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="label" xsi:type="string" translate="true">Date of Birth</item>
+                    <item name="dateFormat" xsi:type="string">dd-MM-yyyy</item>
+                    <item name="options" xsi:type="array">
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="filter" xsi:type="string">dateRange</item>
+                    <item name="sortOrder" xsi:type="number">6</item>
+                    <item name="draggable" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+
+        <column name="salary">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Salary</item>
+                    <item name="sortOrder" xsi:type="number">6</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="draggable" xsi:type="boolean">true</item>
+                </item>
+            </argument>
+        </column>
+
+        <actionsColumn name="actions" class="Dtn\Office\Ui\Component\Listing\Column\EmployeeAction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="indexField" xsi:type="string">entity_id</item>
+                    <item name="align" xsi:type="string">right</item>
+                    <item name="label" xsi:type="string" translate="true">Actions</item>
+                    <item name="filterable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </actionsColumn>
+    </columns>
+</listing>
