@@ -1,0 +1,155 @@
+<h2 data-bind="text: titles()"></h2>
+
+<!-- Popup button for create new employee -->
+<button type="button" data-bind="event: {click: addEmployee}">
+    <span data-bind="i18n: 'Add New Employee'"></span>
+</button>
+<br>
+
+<!-- Popup form for edit & create employee -->
+<br>
+<div id="employee-form-popup" style="display: none;">
+    <form data-role="save" data-bind="submit:save">
+        <input value="Employee Name" type="hidden" name="employee_id"
+               data-bind='value: typeof(currentEmployee()) != "undefined" ? currentEmployee().employee_id:""'>
+        <div class="fieldset _mainForm" data-bind="attr: {'data-hasrequired': $t('* Required Fields')}">
+            <div>
+                <div class="field field-department required">
+                    <label class="label" for="department"><span
+                            data-bind="input: currentEmployee.department"></span></label>
+                    <div class="control">
+                        <select class="input-text" id="department" name="department" data-validate="{required:true}"
+                                data-bind='value: typeof(currentEmployee()) != "undefined" ? currentEmployee().department:""'
+                        >
+                            <option value="">Please choose a department</option>
+                            <option value="IT">IT</option>
+                            <option value="HR">HR</option>
+                            <option value="Marketing">Marketing</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="field field-name required">
+                    <label class="label" for="firstname"><span
+                            data-bind="input: currentEmployee.firstname"></span></label>
+                    <div class="control">
+                        <input type="text"
+                               data-bind='value: typeof(currentEmployee()) != "undefined" ? currentEmployee().firstname:""'
+                               class="input-text"
+                               id="firstname"
+                               name="firstname"
+                               data-validate="{required:true}"
+                               placeholder="Please input first name"/>
+                    </div>
+                </div>
+                <div class="field field-name required">
+                    <label class="label" for="lastname"><span
+                            data-bind="input: currentEmployee.lastname"></span></label>
+                    <div class="control">
+                        <input type="text"
+                               data-bind='value: typeof(currentEmployee()) != "undefined" ? currentEmployee().lastname:""'
+                               class="input-text"
+                               id="lastname"
+                               name="lastname"
+                               data-validate="{required:true}"
+                               placeholder="Please input last name"/>
+                    </div>
+                </div>
+                <div class="field field-email required">
+                    <label class="label" for="email"><span data-bind="input: currentEmployee.email"></span></label>
+                    <div class="control">
+                        <input type="email"
+                               class="input-text"
+                               id="email"
+                               name="email"
+                               data-bind='value: typeof(currentEmployee()) != "undefined" ? currentEmployee().email:""'
+                               data-validate="{required:true}"
+                               placeholder="Please input email"/>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="field field-dob required">
+                    <label for="dob" class="label"><span data-bind="input: currentEmployee.dob"></span></label>
+                    <div class="control">
+                        <input type="date"
+                               class="input-text"
+                               id="dob"
+                               name="dob"
+                               data-bind='value: typeof(currentEmployee()) != "undefined" ? currentEmployee().dob:""'
+                               data-validate="{required:true}"
+                               placeholder="Please input date of birth"/>
+                    </div>
+                </div>
+                <div class="field field-salary required">
+                    <label for="salary" class="label"><span data-bind="input: currentEmployee.salary"></span></label>
+                    <div class="control">
+                        <input type="number"
+                               class="input-text"
+                               id="salary"
+                               name="salary"
+                               data-bind='value: typeof(currentEmployee()) != "undefined" ? currentEmployee().salary:""'
+                               data-validate="{required:true}"
+                               placeholder="Please input this employee's salary"/>
+                    </div>
+                </div>
+                <div class="field note required">
+                    <label for="note" class="label"><span data-bind="input: currentEmployee.note"></span></label>
+                    <div class="control">
+                        <input type="text"
+                               class="input-text"
+                               id="note"
+                               name="note"
+                               data-bind='value: typeof(currentEmployee()) != "undefined" ? currentEmployee().note:""'
+                               data-validate="{required:true}"
+                               placeholder="Please input some note about this employee"/>
+                    </div>
+                </div>
+            </div>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="submit" class="__save"><span data-bind="i18n: 'Save'"></span></button>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+
+<table>
+    <thead>
+    <th>ID</th>
+    <th>Department</th>
+    <th>First Name</th>
+    <th>Last Name</th>
+    <th>Email</th>
+    <th>Date Of Birth</th>
+    <th>Salary</th>
+    <th>Note</th>
+    <th>Action</th>
+    </thead>
+
+    <tbody data-bind="foreach: totalEmployee()">
+    <tr data-bind="attr: {id: 'tr-employee-' + employee_id}">
+        <td data-bind="text: employee_id"></td>
+        <td data-bind="text: department"></td>
+        <td data-bind="text: firstname"></td>
+        <td data-bind="text: lastname"></td>
+        <td data-bind="text: email"></td>
+        <td data-bind="text: dob"></td>
+        <td data-bind="text: salary"></td>
+        <td data-bind="text: note"></td>
+        <td>
+            <div class="actions-toolbar">
+                <div class="primary">
+                    <button type="button" class="_edit" data-bind="click : $parent.editEmployee.bind($parent)"><span
+                            data-bind="i18n: 'Edit'">Edit</span></button>
+                </div>
+                <div class="secondary">
+                    <button type="button" class="_delete" data-bind="click : $parent.remove.bind($parent)"><span
+                            data-bind="i18n: 'Delete'">Delete</span></button>
+                </div>
+            </div>
+        </td>
+    </tr>
+    </tbody>
+
+</table>
