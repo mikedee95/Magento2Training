@@ -18,7 +18,6 @@ define([ // define function with dependencies.
             totalEmployee: ko.observableArray([]), //detect change of employee list, bind a list of elements
 
             initialize: function (config) {
-                // const self = this;
                 this._super();
                 if (config.employeeList.length > 0) {
                     this.totalEmployee(config.employeeList);
@@ -147,10 +146,6 @@ define([ // define function with dependencies.
                         )
                 }
             },
-
-            // getFirstname: function () {
-            //     return typeof (this.currentEmployee()) != "undefined" ? this.currentEmployee().firstname : "";
-            // }
         });
     }
 );
