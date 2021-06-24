@@ -1,0 +1,72 @@
+._mainForm {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+#dob,
+#department,
+#position,
+#email,
+#salary,
+#note,
+#firstname,
+#lastname {
+  width: 300px;
+  margin-right: 30px;
+  margin: 10px 0;
+}
+
+table {
+  border: 2px solid #ddd;
+}
+
+table th {
+  border: 2px solid #ddd;
+}
+
+table td {
+  border: 1px solid #ddd;
+}
+
+.__save,
+.__edit {
+  background: #000;
+  color: #fff;
+  padding: 10px 20px;
+  border-radius: 10px;
+  border: none;
+  outline: none;
+  transition: all 0.5s;
+  transform: translateY(108px);
+}
+
+.__save:hover,
+.__edit:hover {
+  background: #fff;
+  color: #000;
+  padding: 10px 20px;
+}
+
+.base {
+  display: none;
+}
+
+._edit,
+._delete {
+  width: 50px;
+  justify-content: center;
+  display: flex;
+  border: none;
+  outline: none;
+}
+
+._edit {
+  background: #426b25;
+  color: #fff;
+  margin-right: 15px;
+}
+
+._delete {
+  background: #6d1b1b;
+  color: #fff;
+}
