@@ -1,0 +1,15 @@
+<?xml version="1.0" ?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+	<system>
+		<section id="cms">
+			<group id="wysiwyg">
+				<field id="filetypes" translate="label comment tooltip" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Attach PDF file for product</label>
+                	<frontend_model>Dtn\Upload\Block\Adminhtml\System\Config\Form\Field\Filetypes</frontend_model>
+                    <backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+                    <comment><![CDATA[By default the following filetypes are available after installing this module 'doc','docm','docx','csv','xml','xls','xlsx','pdf','zip','tar']]></comment>
+				</field>
+			</group>
+		</section>
+	</system>
+</config>
