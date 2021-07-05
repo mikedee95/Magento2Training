@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Dtn_Wrapping::giftwrap" title="Gift Wrap" module="Dtn_Wrapping" sortOrder="30" parent="Dtn_Wrapping::base" resource="Dtn_Wrapping::base"/>
+        <add id="Dtn_Wrapping::giftwrap_manage" title="Manage Gift Wrappers" module="Dtn_Wrapping" sortOrder="10" parent="Dtn_Wrapping::giftwrap" action="giftwrap/index/" resource="Dtn_Wrapping::manage" />
+        <add id="Dtn_Wrapping::giftwrap_manage_config" title="Configuration" module="Dtn_Wrapping" sortOrder="20" parent="Dtn_Wrapping::giftwrap" action="adminhtml/system_config/edit/section/giftwrap" resource="Dtn_Wrapping::manage" />
+    </menu>
+</config>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Sales:etc/sales.xsd">
+    <section name="quote">
+        <group name="totals">
+            <item name="giftwrap_amount" instance="Dtn\Wrapping\Model\Quote\Address\Total\GiftWrapFee" sort_oder="150"/>
+        </group>
+    </section>
+    <section name="order_invoice">
+        <group name="totals">
+            <item name="giftwrap_amount" instance="Dtn\Wrapping\Model\Order\Total\Invoice\GiftWrapFee" sort_order="160"/>
+        </group>
+    </section>
+    <section name="order_creditmemo">
+        <group name="totals">
+            <item name="giftwrap_amount" instance="Dtn\Wrapping\Model\Order\Total\Creditmemo\GiftWrapFee" sort_order="160" />
+        </group>
+    </section>
+</config>
