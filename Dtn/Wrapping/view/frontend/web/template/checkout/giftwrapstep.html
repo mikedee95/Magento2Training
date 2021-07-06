@@ -1,0 +1,173 @@
+<!--The 'step_code' value from the .js file should be used-->
+<li data-bind="fadeVisible: isVisible" id="giftwrapstep">
+    <div class="step-content" data-role="content" id="checkout-step-title">
+        <div class="message-error error message" id="no-gift-box-msg" data-ui-id="message-error">
+            <div data-bind="i18n: 'Please select any Gift Wrap or click Skip'"></div>
+        </div>
+        <div class="step-title" data-bind="i18n: 'Gift Wrapping'" data-role="title">
+
+        </div>
+        <p data-bind="visible: isVisiblePre" id="hintPerOrder"><small>*Gift Wrap Cost Charged: $<span data-bind="text: amount"> </span></small></p>
+        <div class="include-giftwrap">
+            <input type="checkbox" id="include-giftwrap" />
+            <strong><span data-bind="i18n: 'Add Gift Wraps'"></span></strong>
+            <div class="actions-toolbar-container">
+                <form class="buttonright" data-bind="submit: navigateToNextStep" novalidate="novalidate">
+
+                    <div class="actions-toolbar">
+                        <div class="primary">
+                            <button class="button action continue primary skip-giftwrap" data-role="opc-continue" type="submit">
+                                <span>
+                                    <!-- ko i18n: 'Next'-->
+                                    <!-- /ko -->
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="giftwrap-form-container">
+            <!-- ko if: moduleEnabled -->
+            <form class="giftwrapform form form-cart" data-bind="submit: saveGiftWrap" id="form-validate" method="post" novalidate="novalidate">
+                <table class="cart items data table giftwraptable" id="shopping-cart-table">
+                    <thead>
+                    <tr>
+                        <th class="col itemcol" scope="col">
+                                    <span>
+                                        Item
+                                    </span>
+                        </th>
+                        <th class="col namecol" scope="col">
+                                    <span>
+                                        Name
+                                    </span>
+                        </th>
+                        <th class="col pricecol" scope="col">
+                                    <span>
+                                        Price
+                                    </span>
+                        </th>
+                        <th class="col messagecol" scope="col">
+                                    <span>
+                                        Message
+                                    </span>
+                        </th>
+                        <th class="col gift" scope="col">
+                                    <span>
+                                        Add Gift Wrap
+                                    </span>
+                        </th>
+                    </tr>
+                    </thead>
+                    <tbody class="cart item" data-bind="foreach: { data: productData, as: 'productitem' }">
+                    <tr class="item-info">
+                        <td class="col item" data-th="Item">
+                            <a class="product-item-photo" href="" tabindex="-1" title="shirt">
+                                        <span class="product-image-container" style="width:100px;">
+                                            <span class="product-image-wrapper" style="padding-bottom: 100%;">
+                                                <img alt="shirt" class="product-image-photo" data-bind="attr:{src: image}" height="165" width="165">
+                                                </img>
+                                            </span>
+                                        </span>
+                            </a>
+                        </td>
+                        <td>
+                            <div class="product-item-details">
+                                <strong class="product-item-name">
+                                    <a href="">
+                                                <span data-bind="text: name">
+                                                </span>
+                                    </a>
+                                    <span data-bind="html: configurableOptions">
+                                            </span>
+                                    <span class="product-sku" data-bind="text:sku" style="display:none">
+                                            </span>
+                                    <span class="giftwrap-selecttitle">
+                                            </span>
+                                </strong>
+                            </div>
+                        </td>
+                        <td class="col price" data-th="Price">
+                                    <span>
+                                        <span class="currencySymbol" data-bind="text: currencySymbol">
+                                        </span>
+                                        <span class="price-product" data-bind="text: price">
+                                        </span>
+                                    </span>
+                            <span class="price-product-base" data-bind="text: price" style="display:none">
+                                    </span>
+                        </td>
+                        <td class="col message">
+                            <textarea cols="50" name="message" maxlength="40" rows="2"></textarea>
+                            <div id="char-limit"><span id="chars">40</span> <!-- ko i18n: 'characters remaining'--><!-- /ko --></div>
+                            <span class="dontapply action continue primary">
+                                        <span>
+                                            <!-- ko i18n: 'Clear'-->
+                                            <!-- /ko -->
+                                        </span>
+                                    </span>
+                        </td>
+                        <td>
+                            <input class="sku" data-bind="attr:{value:sku}" name="sku" type="hidden"/>
+                            <input class="is_giftwrap" name="is_giftwrap" type="hidden" value="0"/>
+                            <input class="giftwrap_id" name="giftwrap_id" type="hidden" value=""/>
+                            <input class="giftwrap_price" name="giftwrap_price" type="hidden" value=""/>
+                            <ul class="giftwrap-image" data-bind="foreach: { data: smallimages, as: 'items' }">
+                                <li>
+                                    <img class="smallimagegift" data-bind="attr:{src:image , id:giftwrap_id, price:price, title:name}"/>
+                                    <span class="gift-wrap-price" data-bind="text: price">
+                                            </span>
+                                    <!-- ko if: perOrder -->
+                                    <span class="gift-wrap-formatted-price" data-bind="text: formatted_price">
+                                            </span>
+                                    <!-- /ko -->
+                                </li>
+                            </ul>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <hr>
+                <button class="btn btn-primary action submit primary buttonright" type="submit">
+                            <span>
+                                <!-- ko i18n: 'Next'-->
+                                <!-- /ko -->
+                            </span>
+                </button>
+                </hr>
+            </form>
+            <form class="buttonleft" data-bind="submit: navigateToNextStep" novalidate="novalidate">
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button class="button action continue primary" data-role="opc-continue" type="submit">
+                                <span>
+                                    <!-- ko i18n: 'Skip'-->
+                                    <!-- /ko -->
+                                </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- /ko -->
+            <!-- ko if: moduleEnabled == false -->
+            <div data-bind="i18n: 'No gift wrap found matching to the store settings.'"></div>
+            <form class="buttonright" data-bind="submit: navigateToNextStep" novalidate="novalidate">
+
+                <div class="actions-toolbar">
+                    <div class="primary">
+                        <button class="button action continue primary" data-role="opc-continue" type="submit">
+                                <span>
+                                    <!-- ko i18n: 'Next'-->
+                                    <!-- /ko -->
+                                </span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+            <!-- /ko -->
+        </div>
+    </div>
+</li>
+<br>
+<!-- <p style="color: grey;"><small>* There will charge of $50 for giftwrap</small></p> -->

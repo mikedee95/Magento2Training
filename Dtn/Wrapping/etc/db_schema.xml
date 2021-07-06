@@ -13,9 +13,6 @@
         <constraint xsi:type="primary" referenceId="PRIMARY">
             <column name="giftwrap_id"/>
         </constraint>
-        <constraint xsi:type="index" referenceId="INDEX">
-            <column name="published_at"/>
-        </constraint>
     </table>
 
     <table name="dtn_wrapping_quote" resource="default" engine="innodb" comment="DTN Wrapping Quote Table">

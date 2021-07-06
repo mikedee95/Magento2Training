@@ -1,0 +1,93 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="admin__table-wrapper">
+    <table class="data-table admin__table-primary order-invoice-tables">
+        <thead>
+        <tr class="headings">
+            <th class="col-product"><span><?php /* @escapeNotVerified */ echo __('Product') ?></span></th>
+            <th class="col-price"><span><?php /* @escapeNotVerified */ echo __('Price') ?></span></th>
+            <th class="col-qty"><span><?php /* @escapeNotVerified */ echo __('Qty') ?></span></th>
+            <th class="col-subtotal"><span><?php /* @escapeNotVerified */ echo __('Subtotal') ?></span></th>
+            <th class="col-tax"><span><?php /* @escapeNotVerified */ echo __('Tax Amount') ?></span></th>
+            <th class="col-discount"><span><?php /* @escapeNotVerified */ echo __('Discount Amount') ?></span></th>
+            <th class="col-total last"><span><?php /* @escapeNotVerified */ echo __('Row Total') ?></span></th>
+        </tr>
+        </thead>
+        <?php $_items = $block->getInvoice()->getAllItems() ?>
+        <?php $i = 0; foreach ($_items as $_item): ?>
+            <?php if ($_item->getOrderItem()->getParentItem()) {
+                continue;
+            } else {
+                $i++;
+            } ?>
+            <tbody class="<?php /* @escapeNotVerified */ echo $i%2 ? 'even' : 'odd' ?>">
+            <?php echo $block->getItemHtml($_item) ?>
+            <?php echo $block->getItemExtraInfoHtml($_item->getOrderItem()) ?>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+</div>
+
+<!-- Gift Wrap Info -->
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$productModel = $objectManager->get('Magento\Catalog\Model\Product');
+$giftWrapModel = $objectManager->get('Dtn\Wrapping\Model\GiftWrap');
+$mediaUrl = $objectManager->get('Magento\Store\Model\StoreManagerInterface')->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$_order = $block->getOrder();
+$giftWrapInfo = unserialize($_order->getData('gift_wrap_info'));
+$storeConfig = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface');
+$storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+if(is_array($giftWrapInfo)){
+    ?>
+    <div class="admin__page-section-title">
+        <span class="title">Gift Wrap Details</span>
+    </div>
+    <div class="admin__table-wrapper">
+        <table class="data-table admin__table-primary edit-order-table">
+            <thead>
+            <tr class="headings">
+                <th class="col"><?php echo __('Product'); ?></th>
+                <th class="col"><?php echo __('Gift Box'); ?></th>
+                <th class="col"><?php echo __('Gift Message'); ?></th>
+                <th class="col"><?php echo __('Wrapper Price'); ?></th>
+            </tr>
+            </thead>
+            <?php
+            foreach ($giftWrapInfo['data'] as $giftWrap) {
+                if (!($giftWrap['is_giftwrap'])) {
+                    continue;
+                }
+                $giftWrapData = array();
+                if($giftWrap['giftwrap_id'] == 0){
+                    $giftWrapData['title'] = $storeConfig->getValue('giftwrap/default_gift_wrap/label', $storeScope);
+                    $giftWrapData['image'] = 'default_gift_wrap/'.$storeConfig->getValue('giftwrap/default_gift_wrap/upload_image_id', $storeScope);
+                } else{
+                    $giftWrapData = $giftWrapModel->load($giftWrap['giftwrap_id'])->getData();
+                }
+                $productData = $productModel->load($productModel->getIdBySku($giftWrap['sku']));
+                ?>
+                <tbody>
+                <tr>
+                    <td class="col"><?php echo $productData->getName(); ?></td>
+                    <td class="col"><?php echo $productData->getSku(); ?></td>
+                    <td class="col"><img src="<?php echo $mediaUrl.$giftWrapData['image']; ?>" title="<?php echo $giftWrapData['title'] ?>" height='75px' width=75px; /></td>
+                    <td class="col"><?php if(empty(trim($giftWrap['message']))){echo '----';} else{ echo $giftWrap['message']; } ?></td>
+                    <td class="col"><?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($giftWrap['giftwrap_price'], true, false); ?></td>
+                </tr>
+                </tbody>
+                <?php
+            }
+            ?>
+        </table>
+    </div>
+    <?php
+}
+?>
