@@ -1,2 +1,2 @@
 # Magento2Training
-CRUD, PDF Upload, Custom Shipping &amp; Quote Module
+Simple CRUD, PDF Upload, Custom Shipping, Special Quote &amp; Gift Wrap Module
