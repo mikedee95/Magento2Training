@@ -1,0 +1,96 @@
+<?php
+
+$objectManager  = \Magento\Framework\App\ObjectManager::getInstance();
+$storeManager   = $objectManager->get('\Magento\Store\Model\StoreManagerInterface');
+$config         = $objectManager->get('\Magento\Framework\App\Config\ScopeConfigInterface');
+$localeCurrency = $objectManager->get('\Magento\Framework\Locale\CurrencyInterface');
+
+$productConfig = $objectManager->get('\Magento\Catalog\Helper\Product\Configuration');
+$storeManager->getStore()->getBaseUrl();
+$mediaurl        = $storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
+$currency_code   = $storeManager->getStore()->getCurrentCurrencyCode();
+$currency_symbol = $localeCurrency->getCurrency($currency_code)->getSymbol();
+
+//giftwrap items
+$giftItemArray = $block->getGiftwrapItems();
+ $perOrderCost = $config->getValue('giftwrap/cost_calculation/price');
+ // print_r($perOrderCost); die();
+
+// Quote product Array
+$productArray = array();
+foreach ($block->getQuote() as $value) {
+    $_product = $objectManager->create('\Magento\Catalog\Model\Product')->load($value->getProductId());
+    $imageurl = $_product->getThumbnail();
+
+    //custom optoins
+    $configurableOptions = ' ';
+    if ($value->getProductType() == 'configurable') {
+        $options = $value->getProduct()->getTypeInstance(true)->getOrderOptions($value->getProduct());
+        foreach ($options['attributes_info'] as $_option) {
+            $configurableOptions .= "<br><span>" . $_option['label'] . ":</span>";
+            $configurableOptions .= "<span>" . $_option['value'] . "</span>";
+        }
+    }
+    $qty = $value->getQty();
+    for ($i = 0; $i < $qty; $i++) {
+        $productArray[] = array(
+            "productid"           => $value->getProductId(),
+            "name"                => $value->getName(),
+            "currencySymbol"      => $currency_symbol,
+            "price"               => number_format((float) $value->getPrice(), 2, '.', ''),
+            "image"               => $mediaurl . 'catalog/product' . $imageurl,
+            "sku"                 => $value->getSku(),
+            "smallimages"         => $giftItemArray,
+            "configurableOptions" => $configurableOptions,
+        );
+    }
+}
+
+$quoteEntityId = $block->getQuoteId();
+$giftItemsToEncode = null;
+if($giftItemArray[0]['giftwrap_id'] == 0){
+    if($giftItemArray[0]['name'] != '' && $giftItemArray[0]['image'] != $mediaurl.'default_gift_wrap/'){
+        $giftItemsToEncode = \Zend_Json::encode($giftItemArray);
+    }
+} else{
+    $giftItemsToEncode = \Zend_Json::encode($giftItemArray);
+}
+?>
+<script>
+        window.perOrderCost = <?php echo $perOrderCost; ?>;
+        window.quotevalue = <?php echo \Zend_Json::encode($productArray) ?>;
+        <?php
+        if($giftItemsToEncode){
+            ?>
+            window.giftwrapitems = <?php echo $giftItemsToEncode ?>;
+            <?php
+        }
+        ?>
+        window.saveUrl= "<?php echo $storeManager->getStore()->getBaseUrl() . 'giftwrap/index/saveurl'; ?>";
+        window.quoteentityid = <?php echo $quoteEntityId; ?>;
+        <?php
+            if($config->getValue('giftwrap/view/enabled')){
+                ?>
+                window.moduleEnabled = true;
+                <?php
+            } else{
+                ?>
+                window.moduleEnabled = false;
+                <?php
+            }
+
+            if($config->getValue('giftwrap/cost_calculation/cost_calculation')){
+                ?>
+                window.perOrder = false;
+                <?php
+            } else{
+                ?>
+                window.perOrder = true;
+                <?php
+            }
+          
+         
+            
+
+        ?>
+</script>

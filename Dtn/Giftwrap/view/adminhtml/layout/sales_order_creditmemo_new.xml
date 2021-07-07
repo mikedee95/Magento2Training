@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+     <body>
+    	<referenceBlock name="order_items">
+        	<action method="setTemplate">
+				<argument name="template" xsi:type="string">Excellence_Giftwrap::order/creditmemo/create/items.phtml</argument>
+			</action>
+        </referenceBlock>
+        <referenceBlock name="creditmemo_totals">
+            <block class="Excellence\Giftwrap\Block\Adminhtml\Sales\Order\Creditmemo\Totals"
+                   name="giftwrap_amount" as="giftwrap_amount"/>
+        </referenceBlock>
+    </body>    
+</page>

@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+  <head>
+    <css src="Dtn_Giftwrap::css/giftwrap.css" />
+  </head>
+
+  <body>
+    <referenceContainer name="content">
+      <block class="Dtn\Giftwrap\Block\Giftwrapstep" name="giftwrapadd" template="Dtn_Giftwrap::giftwrap.phtml"/>
+    </referenceContainer>
+    <referenceBlock name="checkout.root">
+      <arguments>
+        <argument name="jsLayout" xsi:type="array">
+          <item name="components" xsi:type="array">
+            <item name="checkout" xsi:type="array">
+              <item name="children" xsi:type="array">
+                <item name="steps" xsi:type="array">
+                  <item name="children" xsi:type="array">
+                    <item name="giftwrapstep" xsi:type="array">
+                      <item name="component" xsi:type="string">Dtn_Giftwrap/js/view/checkout/giftwrap-step-view</item>
+                      <item name="sortOrder" xsi:type="string">2</item>
+                      <item name="children" xsi:type="array">
+
+                      </item>
+                    </item>
+                  </item>
+                </item>
+                  <item name="sidebar" xsi:type="array">
+                      <item name="children" xsi:type="array">
+                          <item name="summary" xsi:type="array">
+                              <item name="children" xsi:type="array">
+                                  <item name="totals" xsi:type="array">
+                                      <item name="children" xsi:type="array">
+                                          <item name="giftwrap_amount" xsi:type="array">
+                                              <item name="component"  xsi:type="string">Dtn_Giftwrap/js/view/checkout/cart/totals/giftwrapfee</item>
+                                              <item name="sortOrder" xsi:type="string">20</item>
+                                              <item name="config" xsi:type="array">
+                                                  <item name="template" xsi:type="string">Dtn_Giftwrap/checkout/cart/totals/giftwrapfee</item>
+
+                                              </item>
+                                          </item>
+                                      </item>
+                                  </item>
+                              </item>
+                          </item>
+                      </item>
+                  </item>
+              </item>
+
+            </item>
+          </item>
+        </argument>
+     </arguments>
+    </referenceBlock>
+  </body>
+</page>

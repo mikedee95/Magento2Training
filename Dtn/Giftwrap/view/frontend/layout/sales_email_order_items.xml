@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      label="Email Order Items List" design_abstraction="custom">
+    <body>
+    	<referenceBlock name="items">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Dtn_Giftwrap::sales/email/items.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="order_totals">
+        	<block class="Dtn\Giftwrap\Block\Order\Totals" name="giftwrap_amount" as="giftwrap_amount"/>
+    	</referenceBlock>
+    </body>
+</page>
