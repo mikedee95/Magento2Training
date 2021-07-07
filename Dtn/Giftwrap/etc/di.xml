@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Sales\Model\Order\Pdf\Invoice" type="Dtn\Giftwrap\Model\Order\Pdf\Invoice" />
+    <preference for="Magento\Sales\Model\Order\Pdf\Creditmemo" type="Dtn\Giftwrap\Model\Order\Pdf\Creditmemo" />
+    <preference for="Magento\Sales\Model\Order\Pdf\Shipment" type="Dtn\Giftwrap\Model\Order\Pdf\Shipment" />
+</config>

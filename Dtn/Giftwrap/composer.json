@@ -1,0 +1,29 @@
+{
+    "name": "dtn/giftwrap",
+    "description": "DTN Giftwrap Extension",
+    "require": {
+        "excellence/base": "0.0.*"
+    },
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "authors": [
+        {
+          "name": "Manish Prakash",
+          "email": "excellencetechnologies08@gmail.com",
+          "homepage": "https://excellencetechnologies.co.in/",
+          "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Dtn\\Giftwrap\\": ""
+        }
+    }
+}
