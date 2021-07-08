@@ -39,7 +39,10 @@ class AddFeeToOrderObserver implements ObserverInterface
         if (!$giftwrapAmount || !$baseGiftwrapAmount) {
             return $this;
         }
-        //Set giftwrap price  to order
+
+        /**
+         * Set giftwrap price to order
+         */
         $order = $observer->getOrder();
         $order->setData('giftwrap_amount', $giftwrapAmount);
         $order->setData('base_giftwrap_amount', $baseGiftwrapAmount);
