@@ -1,0 +1,10 @@
+<?php $employee = $block->getEmployee() ?>
+
+<?php foreach ($employee as $item) : ?>
+    <p>ID: <?= $item->getData('entity_id') ?></p>
+    <p>Department ID<?= $item->getData('department_id') ?></p>
+    <p>Email: <?= $item->getData('email') ?></p>
+    <p>Firstname: <?= $item->getData('firstname') ?></p>
+    <p>Lastname: <?= $item->getData('lastname') ?></p>
+    <hr><br/><br/>
+<?php endforeach; ?>

@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Dtn\Giftwrap\Controller\AbstractController\GiftwrapLoaderInterface" type="\Dtn\Giftwrap\Controller\AbstractController\GiftwrapLoader" />
+   <!--  <type name="Magento\Checkout\Block\Onepage">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="gift-wrap" xsi:type="object">Plugin\Checkout\Model\Checkout\LayoutProcessor</item>
+            </argument>
+        </arguments>
+   </type> -->
+
+  <!--  <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="gift-wrap" type="Dtn\Giftwrap\Plugin\Checkout\Model\Checkout\LayoutProcessor" sortOrder="100"/>
+    </type> -->
+</config>

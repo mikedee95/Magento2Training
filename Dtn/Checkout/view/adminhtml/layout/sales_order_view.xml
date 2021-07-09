@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="left">
+            <referenceBlock name="sales_order_tabs">
+                <action method="addTab">
+                    <argument name="name" xsi:type="string">specialRequest</argument>
+                    <argument name="block" xsi:type="string">Dtn\Checkout\Block\Adminhtml\Order\SpecialRequest
+                    </argument>
+                </action>
+            </referenceBlock>
+        </referenceContainer>
+        <referenceBlock name="order_info">
+            <block class="Dtn\Checkout\Block\Adminhtml\Order\SpecialRequest" name="sales_order_view_request"
+                   template="order/view/specialrequest.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

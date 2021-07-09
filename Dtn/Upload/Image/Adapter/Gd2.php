@@ -1,0 +1,68 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+namespace Dtn\Upload\Image\Adapter;
+
+class Gd2 extends \Magento\Framework\Image\Adapter\Gd2
+{
+
+    /**
+     * @var \Dtn\Upload\Helper\Settings
+     */
+    protected $settings;
+
+    /**
+     * Gd2 constructor.
+     * @param \Magento\Framework\Filesystem $filesystem
+     * @param \Psr\Log\LoggerInterface $logger
+     * @param \Dtn\Upload\Helper\Settings $helperSettings
+     * @param array $data
+     */
+    public function __construct(
+        \Magento\Framework\Filesystem $filesystem,
+        \Psr\Log\LoggerInterface $logger,
+        \Dtn\Upload\Helper\Settings $helperSettings,
+        array $data = []
+    ) {
+        $this->settings = $helperSettings;
+
+        parent::__construct($filesystem, $logger, $data);
+    }
+
+
+    /**
+     * Open image for processing
+     *
+     * @param string $filename
+     * @return void
+     * @throws \OverflowException
+     */
+    public function open($filename)
+    {
+        $pathInfo = pathinfo($filename);
+        if (!key_exists('extension', $pathInfo) || !in_array($pathInfo['extension'], $this->settings->getExtraFiletypes())) {
+            parent::open($filename);
+        }
+    }
+
+    /**
+     * Save image to specific path.
+     * If some folders of path does not exist they will be created
+     *
+     * @param null|string $destination
+     * @param null|string $newName
+     * @return void
+     * @throws \Exception  If destination path is not writable
+     */
+    public function save($destination = null, $newName = null)
+    {
+        $fileName = $this->_prepareDestination($destination, $newName);
+        $pathInfo = pathinfo($fileName);
+        if (!key_exists('extension', $pathInfo) || !in_array($pathInfo['extension'], $this->settings->getExtraFiletypes())) {
+            parent::save($destination, $newName);
+        }
+    }
+
+}

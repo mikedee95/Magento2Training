@@ -1,0 +1,75 @@
+<?php
+$employees = $block->getEmployee();
+$employeeId = $block->getCurrentEmployee()['entity_id'];
+$departments = $block->getDepartmentCollection();
+?>
+
+<!--CDN Fancybox, jquery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+
+<!--Add New-->
+<a data-fancybox data-src="#addNewForm" href="javascript:;" class="btn btn-primary">Add New Employee</a>
+
+<!--Form Popup-->
+<div style="display:none;"  id="addNewForm">
+    <form method="post"
+          action="<?php echo $block->getUrl('dtn_office/employee/update', ['entity_id' => $employeeId, '_secure' => true])?>">
+        <input type="hidden" name="form_key" value="<?php echo $block->getFormKey() ?>" />
+        <input name="id" type="hidden" value=""  />
+        <label for="firstname">First Name</label>
+        <input class="input_firstname" name="firstname" type="text" value="" required />
+        <br/><br/>
+        <label for="lastname">Last Name</label>
+        <input name="lastname" type="text" value="" required />
+        <br/><br/>
+        <label for="email">Email</label>
+        <input name="email" type="text" value="" required />
+        <br/><br/>
+        <label for="department_id">Department</label>
+        <select name="department_id">
+            <?php foreach ($departments as $department): ?>
+                <option <?php echo $selected = ($block->getCurrentEmployee()['department_id'] === $department['entity_id']) ? 'selected' : '' ?>
+                    value="<?php echo $department['entity_id'];?>" >
+                    <?php echo $department['name'];?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+        <br/><br/>
+        <input type="submit" value="Save" class="action submit primary">
+    </form>
+</div>
+
+<!--Grid -->
+<table>
+    <tr>
+        <th>ID</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Department</th>
+    </tr>
+    <?php foreach ($employees as $employee) : ?>
+        <tr>
+            <td class="employeeId"> <?= $employee->getData('entity_id') ?> </td>
+            <td class="firstname"> <?= $employee->getData('firstname') ?> </td>
+            <td> <?= $employee->getData('lastname') ?> </td>
+            <td> <?= $employee->getData('email') ?> </td>
+            <td> <?= $employee->getDepartment()->getName() ?> </td>
+            <td>
+                <a data-fancybox data-src="#addNewForm" href="javascript:;" onclick="editEmployee(<?php echo $employee->getData('entity_id') ?>);" class="btn btn-primary">Edit</a>
+            </td>
+            <td>
+                <a href="<?= $block->getUrl('dtn_office/employee/delete', ['entity_id' => $employee->getId()]) ?>">Delete</a>
+            </td>
+        </tr>
+    <?php endforeach; ?>
+
+    <?php if ($block->getPagerHtml()): ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
+    <br/>
+</table>
+
+<!--Jquery Fancybox-->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>

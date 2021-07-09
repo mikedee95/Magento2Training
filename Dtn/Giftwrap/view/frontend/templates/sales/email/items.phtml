@@ -1,0 +1,146 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $_order = $block->getOrder() ?>
+<?php if ($_order): ?>
+    <?php $_items = $_order->getAllItems(); ?>
+    <table class="email-items">
+        <thead>
+            <tr>
+                <th class="item-info">
+                    <?= /* @escapeNotVerified */  __('Items'); ?>
+                </th>
+                <th class="item-qty">
+                    <?= /* @escapeNotVerified */  __('Qty'); ?>
+                </th>
+                <th class="item-price">
+                    <?= /* @escapeNotVerified */  __('Price'); ?>
+                </th>
+            </tr>
+        </thead>
+        <?php foreach ($_items as $_item): ?>
+            <?php
+                if ($_item->getParentItem()) {
+                    continue;
+                }
+            ?>
+            <tbody>
+                <?= $block->getItemHtml($_item) ?>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+    <!-- Gift Wrap Info -->
+    <?php
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $productModel = $objectManager->get('Magento\Catalog\Model\Product');
+        $giftWrapModel = $objectManager->get('Dtn\Giftwrap\Model\Giftwrap');
+        $giftWrapInfo = unserialize($_order->getData('gift_wrap_info'));
+        $storeConfig = $objectManager->get('Magento\Framework\App\Config\ScopeConfigInterface');
+        $storeScope = \Magento\Store\Model\ScopeInterface::SCOPE_STORE;
+
+        if(is_array($giftWrapInfo)){
+    ?>
+    <div>
+        <h3><?php echo __('Gift Wrap Details') ?></h3>
+    </div>
+    <table class="email-items">
+        <thead>
+            <tr>
+                <th class="item-info">
+                    <?= /* @escapeNotVerified */  __('Product Name'); ?>
+                </th>
+                <th class="item-info">
+                    <?= /* @escapeNotVerified */  __('SKU'); ?>
+                </th>
+                <th class="item-info">
+                    <?= /* @escapeNotVerified */  __('Gift Box'); ?>
+                </th>
+                <th class="item-info">
+                    <?= /* @escapeNotVerified */  __('Gift Message'); ?>
+                </th>
+                <th class="item-info">
+                    <?= /* @escapeNotVerified */  __('Wrapper Price'); ?>
+                </th>
+            </tr>
+        </thead>
+    <?php
+        foreach ($giftWrapInfo['data'] as $giftWrap) {
+
+            if (!($giftWrap['is_giftwrap'])) {
+                continue;
+            }
+            $giftWrapData = array();
+            if($giftWrap['giftwrap_id'] == 0){
+                $giftWrapData['title'] = $storeConfig->getValue('giftwrap/default_gift_wrap/label', $storeScope);
+                $giftWrapData['image'] = 'default_gift_wrap/'.$storeConfig->getValue('giftwrap/default_gift_wrap/upload_image_id', $storeScope);
+            } else{
+                $giftWrapData = $giftWrapModel->load($giftWrap['giftwrap_id'])->getData();
+            }
+            $productData = $productModel->load($productModel->getIdBySku($giftWrap['sku']));
+            ?>
+            <tbody>
+                <tr>
+                    <td class="col"><?php echo $productData->getName(); ?></td>
+                    <td class="col"><?php echo $productData->getSku(); ?></td>
+                    <td class="col"><img src="<?php echo $block->getUrl('pub/media').$giftWrapData['image']; ?>" title="<?php echo $giftWrapData['title'] ?>" height='75px' width=75px; /></td>
+                    <td class="col"><?php if(empty(trim($giftWrap['message']))){echo '----';} else{ echo $giftWrap['message']; } ?></td>
+                    <td class="col">
+                    <?php
+                        if($storeConfig->getValue('giftwrap/cost_calculation/cost_calculation', $storeScope) !=1){
+                            echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($giftWrap['giftwrap_price'], true, false);
+                        }else{
+                            echo '----';
+                        }
+                    ?></td>
+                </tr>
+            </tbody>
+                <?php
+            }
+            ?>
+            <tbody>
+                <tr>
+                    <td class="col" colspan="4" style="text-align: right;"><?php echo __('Price applied on'); ?></td>
+                    <td class="col">
+                        <?php
+                            if($giftWrapInfo['total']['per_order']){
+                                echo __('Order');
+                            } else{
+                                echo __('Items');
+                            }
+                        ?>
+                    </td>
+                </tr>
+            </tbody>
+            <?php
+        }
+    ?>
+    </table>
+    <table class="email-items">
+        <tfoot class="order-totals">
+            <?= $block->getChildHtml('order_totals') ?>
+        </tfoot>
+    </table>
+    <?php if ($this->helper('Magento\GiftMessage\Helper\Message')->isMessagesAllowed('order', $_order, $_order->getStore()) && $_order->getGiftMessageId()): ?>
+        <?php $_giftMessage = $this->helper('Magento\GiftMessage\Helper\Message')->getGiftMessage($_order->getGiftMessageId()); ?>
+        <?php if ($_giftMessage): ?>
+            <br />
+            <table class="message-gift">
+                <tr>
+                    <td>
+                        <h3><?= /* @escapeNotVerified */  __('Gift Message for this Order') ?></h3>
+                        <strong><?= /* @escapeNotVerified */  __('From:'); ?></strong> <?= $block->escapeHtml($_giftMessage->getSender()) ?>
+                        <br /><strong><?= /* @escapeNotVerified */  __('To:'); ?></strong> <?= $block->escapeHtml($_giftMessage->getRecipient()) ?>
+                        <br /><strong><?= /* @escapeNotVerified */  __('Message:'); ?></strong>
+                        <br /><?= $block->escapeHtml($_giftMessage->getMessage()) ?>
+                    </td>
+                </tr>
+            </table>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--Khai báo đầu vào nguồn dữ liệu collection-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Dtn\Office\Model\ResourceModel\Department\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">dtn_office_department</argument>
+            <argument name="resourceModel" xsi:type="string">Dtn\Office\Model\ResourceModel\Department</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="dtn_listing_data_source_department" xsi:type="string">Dtn\Office\Model\ResourceModel\Department\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Dtn\Office\Model\ResourceModel\Employee\Grid\Collection" type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">dtn_office_employee_entity</argument>
+            <argument name="eventPreFix" xsi:type="string">dtn_office_employee_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">dtn_office_employee_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Dtn\Office\Model\ResourceModel\Employee</argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="dtn_listing_data_source_employee" xsi:type="string">Dtn\Office\Model\ResourceModel\Employee\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\Argument\Interpreter\ConfigurableObject">
+        <arguments>
+            <argument name="classWhitelist" xsi:type="array">
+                <item name="0" xsi:type="string">Magento\Framework\Data\OptionSourceInterface</item>
+                <item name="1" xsi:type="string">Magento\Framework\View\Element\UiComponent\DataProvider\DataProviderInterface</item>
+                <item name="2" xsi:type="string">Magento\Framework\View\Element\UiComponent\ContextInterface</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

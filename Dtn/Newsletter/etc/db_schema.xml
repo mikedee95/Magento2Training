@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="newsletter_subscriber" resource="default" engine="innodb" comment="Dtn Knockout Employee Table">
+        <column name="firstname" xsi:type="varchar" length="64" comment="First Name"/>
+        <column name="lastname" xsi:type="varchar" length="64" comment="Last Name"/>
+    </table>
+</schema>

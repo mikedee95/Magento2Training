@@ -1,0 +1,25 @@
+<?php
+    $employeeId = $block->getCurrentEmployee()['entity_id'];
+    $departments = $block->getDepartmentCollection()
+?>
+<form method="post" action="<?php echo $block->getUrl('dtn_office/employee/update', ['entity_id' => $employeeId])?>">
+    <input name="firstname" type="text" value="<?= $block->getCurrentEmployee()['firstname']?>"/>
+    <br/><br/>
+    <label for="lastname">Last Name</label>
+    <input name="lastname" type="text" value="<?= $block->getCurrentEmployee()['lastname']?>"/>
+    <br/><br/>
+    <label for="email">Email</label>
+    <input name="email" type="text" value="<?= $block->getCurrentEmployee()['email']?>"/>
+    <br/><br/>
+    <label for="department_id">Department</label>
+    <select name="department_id">
+        <?php foreach ($departments as $department): ?>
+            <option <?php echo $selected = ($block->getCurrentEmployee()['department_id'] === $department['entity_id']) ? 'selected' : '' ?>
+                    value="<?php echo $department['entity_id'];?>" >
+                <?php echo $department['name'];?>
+            </option>
+        <?php endforeach; ?>
+    </select>
+    <br/><br/>
+    <input type="submit" value="Save" class="action submit primary">
+</form>

@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="dtn_knockout_employee" resource="default" engine="innodb" comment="Dtn Knockout Employee Table">
+        <column name="employee_id" xsi:type="smallint" padding="6" unsigned="false" nullable="false" identity="true"
+                comment="Employee ID"/>
+        <column name="department" xsi:type="varchar" length="64" comment="Department"/>
+        <column name="email" xsi:type="varchar" length="64" comment="Email"/>
+        <column name="firstname" xsi:type="varchar" length="64" comment="First Name"/>
+        <column name="lastname" xsi:type="varchar" length="64" comment="Last Name"/>
+        <column name="dob" xsi:type="date" comment="Date Of Birth"/>
+        <column name="salary" xsi:type="int" comment="Salary"/>
+        <column name="note" xsi:type="text" comment="Note"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="employee_id"/>
+        </constraint>
+    </table>
+</schema>

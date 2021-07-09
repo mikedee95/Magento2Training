@@ -1,0 +1,40 @@
+<?php
+/**
+ * Giftwrap template for separate item
+ *
+ */
+
+/**
+ * @var $this Dtn\Giftwrap\Block\View
+ * @see Dtn\Giftwrap\Block\View
+ */
+
+$dataCollection = $block->getDataCollection();
+
+?>
+<div class="product-page-gift-wrap-container">
+    <input type="checkbox" id="toBeWrappped"><?= __('Gift Wrap This Product') ?>
+    <div class="gift-box-selector">
+        <?php
+foreach ($dataCollection as $data) {
+    ?>
+                <div class="gift-box-option">
+                    <div class="gift-box-option-image">
+                        <img src="<?= $block->getMediaUrl() . $data->getData('image'); ?>">
+                    </div>
+                    <div class="gift-box-option-input">
+                        <input type="radio" name="gift-box" value="<?php echo $data->getId(); ?>" id=="gift-box-<?= $data->getId(); ?>"><span><?php echo $data->getTitle(); ?></span>
+                    </div>
+                </div>
+                <?php
+}
+?>
+    </div>
+</div>
+<script type="text/javascript">
+require(['jquery'],function(jQuery){
+    jQuery("#toBeWrappped").change(function(){
+        jQuery(".gift-box-selector").toggle();
+    });
+});
+</script>

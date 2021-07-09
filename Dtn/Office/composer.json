@@ -1,0 +1,21 @@
+{
+    "name": "dtn/module-office",
+    "description": "DTN office module",
+    "type": "magento2-module",
+    "version": "0.1.0",
+    "authors": [
+      {
+        "name": "Hans Phung",
+        "email": "hans@dtn.com.vn"
+      }
+    ],
+    "autoload": {
+      "files": [
+        "registration.php"],
+        "psr-4": {
+          "Dtn\\Dtn_Office\\": ""
+        }
+      }
+    }
+    
+  

@@ -1,0 +1,92 @@
+.activeimage {
+    border: 2px solid #ccc !important;
+}
+
+.smallimagegift {
+    border: 2px solid transparent;
+}
+
+.buttonleft {
+    float: left;
+}
+
+.buttonright {
+    float: right;
+}
+
+.giftwraptable .itemcol {
+    width: 20%;
+}
+
+.giftwraptable .namecol {
+    width: 15%;
+}
+
+.giftwraptable .pricecol {
+    width: 15%;
+}
+
+.giftwraptable .messagecol {
+    width: 20%;
+}
+
+.smallimagegift {
+    width: 40px;
+    height: 40px;
+    cursor: pointer
+}
+
+.giftwrap-image {
+    padding: 0;
+    margin: 0
+}
+
+.giftwrap-image li {
+    list-style: none;
+    display: inline;
+    padding: 4px;
+    width: 40px;
+    float: left;
+    margin: 0 5px;
+}
+
+.giftwrap-image li span {
+    display: none;
+}
+
+.product-image-container {
+    width: 100px;
+}
+
+#char-limit {
+    font-size: 11px;
+    color: #777;
+    margin-bottom: 5px;
+}
+
+#char-limit.full {
+    color: #FF0000;
+}
+
+#no-gift-box-msg {
+    display: none;
+}
+
+.giftwrap-image li span.gift-wrap-formatted-price {
+    display: block;
+    text-align: center;
+    font-size: 11px;
+}
+div.include-giftwrap{
+    margin-top: 15px;
+    margin-bottom: 20px;
+}
+div.actions-toolbar-container{
+    margin-top: 20px;
+}
+div.giftwrap-form-container{
+    display: none;
+}
+#hintPerOrder{
+    color: grey;
+}
